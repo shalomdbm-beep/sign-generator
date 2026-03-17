@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחולל שלטים להדפסה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="none" aria-label="מחולל שלטים">
+          <rect x="2" y="4" width="28" height="8" rx="2" stroke="currentColor" stroke-width="2"/>
+          <rect x="2" y="14" width="28" height="8" rx="2" stroke="currentColor" stroke-width="2"/>
+          <line x1="8" y1="24" x2="8" y2="28" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"/>
+          <line x1="24" y1="24" x2="24" y2="28" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"/>
+        </svg>
+        <h1>מחולל שלטים</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Controls Panel -->
+    <section class="controls-panel">
+      <div class="controls-grid">
+        <!-- Page Settings -->
+        <div class="control-group">
+          <h2>הגדרות דף</h2>
+          <div class="control-row">
+            <label>
+              <span>גודל דף</span>
+              <select id="pageSize">
+                <option value="A4" selected>A4</option>
+                <option value="A3">A3</option>
+                <option value="Letter">Letter</option>
+              </select>
+            </label>
+            <label>
+              <span>כיוון</span>
+              <select id="orientation">
+                <option value="portrait" selected>לאורך</option>
+                <option value="landscape">לרוחב</option>
+              </select>
+            </label>
+            <label>
+              <span>שלטים בדף</span>
+              <select id="signsPerPage">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6" selected>6</option>
+                <option value="8">8</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- Style Settings -->
+        <div class="control-group">
+          <h2>עיצוב</h2>
+          <div class="control-row">
+            <label>
+              <span>פונט</span>
+              <select id="fontFamily">
+                <option value="Heebo">Heebo</option>
+                <option value="Arial" selected>Arial</option>
+                <option value="David">David</option>
+                <option value="Arial Black">Arial Black</option>
+              </select>
+            </label>
+            <label>
+              <span>גודל טקסט</span>
+              <select id="fontSize">
+                <option value="auto" selected>אוטומטי</option>
+                <option value="18">18pt</option>
+                <option value="24">24pt</option>
+                <option value="30">30pt</option>
+                <option value="36">36pt</option>
+                <option value="42">42pt</option>
+                <option value="48">48pt</option>
+                <option value="60">60pt</option>
+              </select>
+            </label>
+            <label>
+              <span>משקל</span>
+              <select id="fontWeight">
+                <option value="400">רגיל</option>
+                <option value="700" selected>בולט</option>
+                <option value="900">כבד מאוד</option>
+              </select>
+            </label>
+          </div>
+          <div class="control-row">
+            <label>
+              <span>צבע טקסט</span>
+              <input type="color" id="textColor" value="#000000">
+            </label>
+            <label>
+              <span>צבע רקע</span>
+              <input type="color" id="bgColor" value="#ffffff">
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showBorders" checked>
+              <span>קווי חיתוך</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signs Input -->
+      <div class="signs-input-section">
+        <h2>תוכן השלטים</h2>
+        <p class="help-text">שלט אחד בכל שורה. שורה ריקה = תא ריק. אפשר לגרור לשינוי סדר.</p>
+        <div id="signsList" class="signs-list"></div>
+        <div class="signs-actions">
+          <button id="addSign" class="btn btn-secondary">+ הוסף שלט</button>
+          <button id="clearAll" class="btn btn-ghost">נקה הכל</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preview -->
+    <section class="preview-section">
+      <div class="preview-header">
+        <h2>תצוגה מקדימה</h2>
+        <button id="printBtn" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          הדפס / שמור PDF
+        </button>
+      </div>
+      <div class="preview-wrapper">
+        <div id="previewPage" class="preview-page"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">
+      Created with Perplexity Computer
+    </a>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
