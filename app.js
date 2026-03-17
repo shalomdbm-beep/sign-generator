@@ -297,7 +297,8 @@
     let scale;
 
     if (isMobile) {
-      const wrapperW = wrapper ? wrapper.clientWidth - 24 : 340;
+      // Fill width, height follows naturally from A4 ratio
+      const wrapperW = wrapper ? wrapper.clientWidth - 20 : 340;
       scale = wrapperW / pageW_mm;
     } else {
       const wrapperW = wrapper ? wrapper.clientWidth - 40 : 500;
