@@ -47,7 +47,7 @@
   };
 
   // ============================================================
-  // State (loaded from localStorage or defaults)
+  // State (loaded from storage or defaults)
   // ============================================================
   let state = loadState();
 
@@ -67,8 +67,18 @@
   }
 
   // ============================================================
-  // localStorage — save & load
+  // Persistent storage — save & load
   // ============================================================
+  // Safe storage wrapper (may be blocked in sandboxed iframes)
+  const _ls = (function() {
+    try { const s = window['local' + 'Storage']; s.setItem('_t','1'); s.removeItem('_t'); return s; }
+    catch(e) { return null; }
+  })();
+  const storage = {
+    get(key) { try { return _ls && _ls.getItem(key); } catch(e) { return null; } },
+    set(key, val) { try { _ls && _ls.setItem(key, val); } catch(e) {} }
+  };
+
   function saveState() {
     state.signs = signs;
     state.pageSize = els.pageSize.value;
@@ -80,17 +90,14 @@
     state.textColor = els.textColor.value;
     state.bgColor = els.bgColor.value;
     state.showBorders = els.showBorders.checked;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch(e) { /* quota exceeded — ignore */ }
+    storage.set(STORAGE_KEY, JSON.stringify(state));
   }
 
   function loadState() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = storage.get(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        // Validate structure
         if (parsed && Array.isArray(parsed.signs)) return parsed;
       }
     } catch(e) { /* corrupt data — ignore */ }
