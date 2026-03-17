@@ -134,11 +134,23 @@
 
     // Scale preview to fit the available wrapper area
     const wrapper = document.querySelector('.preview-wrapper');
-    const wrapperW = wrapper ? wrapper.clientWidth - 40 : 500;
-    const wrapperH = wrapper ? wrapper.clientHeight - 40 : 700;
-    const scaleX = wrapperW / pageW;
-    const scaleY = wrapperH / pageH;
-    const scale = Math.min(scaleX, scaleY, 2.5); // cap at 2.5px per mm
+    const isMobile = window.innerWidth <= 960;
+    let wrapperW, wrapperH, scale;
+    
+    if (isMobile) {
+      // On mobile: fill width, let height be natural
+      wrapperW = wrapper ? wrapper.clientWidth - 24 : 340;
+      scale = wrapperW / pageW;
+      scale = Math.min(scale, 2.5);
+    } else {
+      // On desktop: fit within wrapper bounds
+      wrapperW = wrapper ? wrapper.clientWidth - 40 : 500;
+      wrapperH = wrapper ? wrapper.clientHeight - 40 : 700;
+      const scaleX = wrapperW / pageW;
+      const scaleY = wrapperH / pageH;
+      scale = Math.min(scaleX, scaleY, 2.5);
+    }
+    
     const previewW = pageW * scale;
     const previewH = pageH * scale;
 
@@ -297,6 +309,16 @@
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
               .replace(/"/g, '&quot;');
+  }
+
+  // ---- Toggle Controls (mobile) ----
+  const toggleBtn = document.getElementById('toggleControls');
+  const controlsContent = document.getElementById('controlsContent');
+  if (toggleBtn && controlsContent) {
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = controlsContent.classList.toggle('open');
+      toggleBtn.classList.toggle('open', isOpen);
+    });
   }
 
   // ---- Resize handler ----

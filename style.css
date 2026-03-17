@@ -55,8 +55,95 @@
 @media (max-width: 960px) {
   .app-main {
     grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 16px;
   }
   .preview-section { order: -1; }
+  .preview-section { position: static; }
+  .preview-wrapper {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none;
+    padding: 12px;
+  }
+  .preview-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .preview-header h2 { text-align: center; }
+  .preview-header .btn-primary { 
+    width: 100%; 
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: var(--text-base);
+  }
+  .controls-panel {
+    padding: 16px;
+    gap: 16px;
+  }
+  .control-row {
+    gap: 8px;
+  }
+  .control-row label {
+    min-width: 70px;
+  }
+  .sign-item {
+    padding: 8px 10px;
+  }
+  .sign-item input[type="text"] {
+    font-size: var(--text-base);
+    padding: 8px 4px;
+  }
+  .signs-actions {
+    flex-direction: row;
+    justify-content: stretch;
+  }
+  .signs-actions .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+  .app-header {
+    padding: 10px 12px;
+  }
+}
+
+/* Toggle Controls Button */
+.toggle-controls-btn {
+  display: none !important;
+  width: 100%;
+  justify-content: center;
+  padding: 12px 16px;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.toggle-arrow {
+  margin-right: auto;
+  margin-left: 8px;
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+.toggle-controls-btn.open .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.controls-content {
+  display: contents;
+}
+
+@media (max-width: 960px) {
+  .toggle-controls-btn {
+    display: inline-flex !important;
+  }
+  .controls-content {
+    display: none;
+  }
+  .controls-content.open {
+    display: block;
+  }
 }
 
 /* Controls Panel */
@@ -102,12 +189,13 @@
 }
 
 select, input[type="color"] {
-  padding: 8px 10px;
+  padding: 10px 12px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background: var(--color-bg);
-  font-size: var(--text-sm);
+  font-size: 16px; /* prevents iOS zoom */
   cursor: pointer;
+  min-height: 44px;
 }
 
 select:hover, input[type="color"]:hover {
@@ -263,7 +351,7 @@ input[type="color"] {
   align-items: center;
   overflow: auto;
   height: calc(100vh - 160px);
-  min-height: 500px;
+  min-height: 400px;
 }
 
 .preview-page {
